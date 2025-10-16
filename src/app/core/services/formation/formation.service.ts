@@ -21,5 +21,10 @@ export class FormationService {
     return this.http.get<PaginatedFormation>(`${this.url}formations`,{headers,params})
   }
 
+  getFormation(id:number){
+    const headers = this.userLocaService.getAuthHeaders()
+    return this.http.get<{Formation:Formation}>(this.url + 'formations/' + id,{headers})
+  }
+
 
 }
