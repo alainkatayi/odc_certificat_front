@@ -8,7 +8,7 @@ import { AuthLoginResponse } from '../../../core/models/auth';
 import { RouterLink } from '@angular/router';
 import { environnement } from '../../../../environnemnts/environnement';
 import { CommonModule } from '@angular/common';
-import { PaginationMeta, PaginationUrls } from '../../../core/models/pagination';
+import { PaginationLink, PaginationMeta, PaginationUrls } from '../../../core/models/pagination';
 
 
 @Component({
@@ -23,23 +23,28 @@ export class FormationListComponent {
   formations!: Formation[]
   user!: AuthLoginResponse | null
   isLoading: boolean = false
-  next_page_url!:string | null
+  paginationMeta:PaginationMeta | null = null
+  currentPage:number = 1
+  links!: PaginationUrls
 
 
 
   ngOnInit() {
-    this.loadFormations()
+    this.loadFormations(this.currentPage)
     this.user = this.userLocalService.getUser()
     console.log(this.user)
   }
 
-  loadFormations(page: number = 1) {
+  loadFormations(page: number) {
     this.isLoading = true;
     this.formationService.getFormations(page).subscribe({
       next: (response) => {
         console.log(response)
         this.formations = response.data
         console.log("data",this.formations)
+        this.paginationMeta = response.meta
+        this.links = response.links
+        this.currentPage = response.meta.current_page
         this.isLoading = false;
       },
       error: (error) => {
@@ -48,5 +53,15 @@ export class FormationListComponent {
 
       }
     })
+  }
+
+  onPageClick(link: PaginationLink) {
+      if (!link.url) return;
+  
+      const url = new URL(link.url);
+      const pageParam = url.searchParams.get('page');
+      const page = pageParam ? parseInt(pageParam, 10) : 1;
+  
+      this.loadFormations(page);
   }
 }

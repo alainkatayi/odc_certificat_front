@@ -150,7 +150,8 @@
                             formations
                         </div>
                         <div class="flex gap-2">
-                            <button
+                            <button (click)="loadFormations(currentPage - 1)"
+                            [disabled]="links.prev == null"
                                 class="px-3 py-1 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors">
                                 Précédent
                             </button>
@@ -161,7 +162,8 @@
                                 class="px-3 py-1 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors">
                                 2
                             </button>
-                            <button
+                            <button (click)="loadFormations(currentPage + 1)"
+                            [disabled]="links.next == null"
                                 class="px-3 py-1 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors">
                                 Suivant
                             </button>
