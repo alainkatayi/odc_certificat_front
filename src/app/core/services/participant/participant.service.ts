@@ -22,4 +22,9 @@ export class ParticipantService {
     return this.http.get<PaginatedParticipant>(`${this.url}participants`, { headers, params })
   }
 
+  getParticipantsByFormation(id: number) {
+    const headers = this.userLocaService.getAuthHeaders()
+    return this.http.get<{ Participants: Participant[] }>(this.url + 'participants/' + id, { headers })
+  }
+
 }
