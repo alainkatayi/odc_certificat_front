@@ -25,6 +25,11 @@ export class CertificatService {
     const headers = this.userLocaService.getAuthHeaders()
     return this.http.get<Certificat[]>(`${this.url}certificats/` + id, { headers })
   }
+
+  genererCertificat(id: number, data:FormData) {
+    const headers = this.userLocaService.getAuthHeaders()
+    return this.http.post(`${this.url}certificats/` + id,data , { headers })
+  }
 }
 
 
