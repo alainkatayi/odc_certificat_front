@@ -26,5 +26,9 @@ export class FormationService {
     return this.http.get<{Formation:Formation}>(this.url + 'formations/' + id,{headers})
   }
 
+  createFormation(data:FormData){
+    const headers = this.userLocaService.getAuthHeaders()
+    return this.http.post(`${this.url}formations`, data, {headers})
+  }
 
 }
