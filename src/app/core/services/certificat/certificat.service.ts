@@ -20,6 +20,11 @@ export class CertificatService {
     const headers = this.userLocaService.getAuthHeaders()
     return this.http.get<PaginatedCertificat>(`${this.url}certificats/`, { headers, params })
   }
+
+  getCertificatbyFormation(id: number): Observable<Certificat[]>{   
+    const headers = this.userLocaService.getAuthHeaders()
+    return this.http.get<Certificat[]>(`${this.url}certificats/` + id, { headers })
+  }
 }
 
 
