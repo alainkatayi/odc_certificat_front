@@ -31,4 +31,9 @@ export class FormationService {
     return this.http.post(`${this.url}formations`, data, {headers})
   }
 
+  deleteFormation(id:number){
+    const headers = this.userLocaService.getAuthHeaders()
+    return this.http.delete(this.url + 'formations/' +id,{headers})
+  }
+
 }
