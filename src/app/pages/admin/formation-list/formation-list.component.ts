@@ -21,11 +21,13 @@ export class FormationListComponent {
 
   constructor(private formationService: FormationService, private userLocalService: UserLocalService) { }
   formations!: Formation[]
+  formationIdToDelete:number = -1
   user!: AuthLoginResponse | null
   isLoading: boolean = false
   paginationMeta:PaginationMeta | null = null
   currentPage:number = 1
   links!: PaginationUrls
+  deleteModalOpen:boolean = false
 
 
 
@@ -63,5 +65,32 @@ export class FormationListComponent {
       const page = pageParam ? parseInt(pageParam, 10) : 1;
   
       this.loadFormations(page);
+  }
+  deleteformation(){
+    this.formationService.deleteFormation(this.formationIdToDelete).subscribe({
+      next:(response)=>{
+        console.log("Formation supprimer")
+        console.log(response)
+      },
+      error:(error) =>{
+        console.log("error", error)
+      }
+    })
+  }
+
+  confirmationDelete(){
+    this.deleteformation()
+    this.closeDeleteModal()
+    this.loadFormations(this.currentPage)
+
+  }
+
+  openDeleteModal(id:number){
+    this.deleteModalOpen = true
+    this.formationIdToDelete = id
+  }
+
+  closeDeleteModal(){
+    this.deleteModalOpen = false
   }
 }
